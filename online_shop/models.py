@@ -37,8 +37,7 @@ class Product(BaseModel):
     rating = models.PositiveSmallIntegerField(choices=RatingChoices.choices, default=RatingChoices.zero.value,
                                               null=True, blank=True)
     discount = models.PositiveSmallIntegerField(default=0)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    is_available = models.BooleanField(default=True)
 
     @property
     def get_image_url(self):
@@ -61,7 +60,7 @@ class Comment(BaseModel):
     email = models.EmailField(max_length=255)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='comments')
     body = models.TextField()
-    is_provide = models.BooleanField(default=False)
+    is_provide = models.BooleanField(default=True)
 
     # def __init__(self, *args, **kwargs):
     #     super().__init__(args, kwargs)
