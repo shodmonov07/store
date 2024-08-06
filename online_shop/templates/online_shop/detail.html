@@ -18,7 +18,7 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="#!">Start Bootstrap</a>
+                <a class="navbar-brand" href="{% url 'product_list' %}">Start Bootstrap</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
@@ -60,7 +60,7 @@
                         {% endif %}
                     </div>
                     <div class="col-md-6">
-                        <div class="small mb-1">Rating: 124 </div>
+                        <div class="small mb-1">Quantity: {{ product.quantity }}</div>
                         <h1 class="display-5 fw-bolder">{{ product.name }}</h1>
                         <div class="fs-5 mb-5">
                             {% if product.discount %}
@@ -70,11 +70,34 @@
                             ${{ product.price }}
                             {% endif %}
                         </div>
-                        <p class="lead">{{ product.description }}</p>
+                         <div>
+                        <a href="{% url 'delete_product' product.id %}">
+                            <button type="button" class="btn btn-danger">Delete</button>
+                        </a>
+                         <a href="{% url 'edit_product' product.id %}">
+                            <button type="button" class="btn btn-secondary">Edit</button>
+                        </a>
+                         </div>
+                            <p>&nbsp;</p>
+                        <div>
+                        <p class="lead"><strong>Description:</strong> <br> {{ product.description }}</p>
+                        </div>
                         <div class="d-flex">
-                            <form method="post" action="{% url 'add_order' product.id %}">
+                            <form method="get" action="{% url 'add_order' product.id %}">
                                 <div class="form-group">
                                     <h2>Place an order</h2>
+                                    <div>
+                                     <ul>
+                                         {% for message in messages %}
+                                             {% if 'error' in message.tags %}
+                                                  <li style="color: red">{{ message }}</li>
+                                             {% elif 'success' in message.tags %}
+                                                    <li style="color: green">{{ message }}</li>
+                                             {% endif %}
+                                        {% endfor %}
+                                     </ul>
+
+                                    </div>
                                 </div>
                                 <div class="form-group mb-3">
                                   <label for="formGroupExampleInput">Your name</label>

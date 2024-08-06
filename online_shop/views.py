@@ -1,10 +1,10 @@
 from typing import Optional
 
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
-from pyexpat.errors import messages
-
-from online_shop.forms import CommentModelForm, OrderModelForm
+from django.contrib import messages
+from online_shop.forms import CommentModelForm, OrderModelForm, ProductModelForm
 from online_shop.models import Product, Category, Comment
 
 
@@ -78,17 +78,15 @@ def add_comment(request, product_id):
 
 def add_order(request, product_id):
     product = get_object_or_404(Product, id=product_id)
-    form = OrderModelForm()
-
-    if request.method == 'POST':
-
-        form = OrderModelForm(request.POST)
+    form = OrderModelForm(request.POST)
+    if request.method == 'GET':
+        form = OrderModelForm(request.GET)
         if form.is_valid():
             order = form.save(commit=False)
             order.product = product
+            order.save()
             if product.quantity >= order.quantity:
                 product.quantity -= order.quantity
-                # add messaging
                 product.save()
                 order.save()
                 messages.add_message(
@@ -96,7 +94,6 @@ def add_order(request, product_id):
                     level=messages.SUCCESS,
                     message='Your order is successfully saved'
                 )
-
                 return redirect('product_detail', product_id)
             else:
                 messages.add_message(
@@ -105,9 +102,43 @@ def add_order(request, product_id):
                     message='Your order is not available'
                 )
 
-    context = {
+    contex = {
         'form': form,
         'product': product,
     }
-    return render(request, 'online_shop/detail.html', context)
+    return render(request, 'online_shop/detail.html', contex)
 
+
+@login_required
+def add_product(request):
+    form = ProductModelForm()
+    if request.method == 'POST':
+        form = ProductModelForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('product_list')
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'online_shop/add-product.html', context)
+
+
+def delete_product(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    if product:
+        product.delete()
+        return redirect('product_list')
+
+
+def edit_product(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    form = ProductModelForm(instance=product)
+    if request.method == 'POST':
+        form = ProductModelForm(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('product_detail', product_id)
+
+    return render(request, 'online_shop/edit-product.html', {'form': form})

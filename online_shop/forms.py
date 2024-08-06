@@ -1,6 +1,6 @@
 from django import forms
 
-from online_shop.models import Comment, Order
+from online_shop.models import Comment, Order, Product
 
 
 class CommentModelForm(forms.ModelForm):
@@ -20,3 +20,10 @@ class OrderModelForm(forms.ModelForm):
     class Meta:
         model = Order
         exclude = ('product',)
+
+
+class ProductModelForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = '__all__'
+
