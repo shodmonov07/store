@@ -9,20 +9,20 @@ from online_shop.forms import CommentModelForm, OrderModelForm, ProductModelForm
 from online_shop.models import Product, Category, Comment
 
 
-def product_list(request, category_id: Optional[int] = None):
+def product_list(request, category_slug: Optional[str] = None):
     categories = Category.objects.all().order_by('id')
     search = request.GET.get('q')
     filter_type = request.GET.get('filter', '')
-    if category_id:
+    if category_slug:
         if filter_type == 'expensive':
-            products = Product.objects.filter(category=category_id).order_by('-price')
+            products = Product.objects.filter(category__slug=category_slug).order_by('-price')
         elif filter_type == 'cheap':
-            products = Product.objects.filter(category=category_id).order_by('price')
+            products = Product.objects.filter(category__slug=category_slug).order_by('price')
         elif filter_type == 'rating':
-            products = Product.objects.filter(Q(category=category_id) & Q(rating__gte=4)).order_by('-rating')
+            products = Product.objects.filter(Q(category__slug=category_slug) & Q(rating__gte=4)).order_by('-rating')
 
         else:
-            products = Product.objects.filter(category=category_id)
+            products = Product.objects.filter(category__slug=category_slug)
 
     else:
         if filter_type == 'expensive':
@@ -50,7 +50,7 @@ def product_detail(request, product_id):
     categories = Category.objects.all()
     product = Product.objects.get(id=product_id)
     comments = Comment.objects.filter(product=product_id, is_provide=True).order_by('-id')
-    related_products = Product.objects.filter(category=product.category, is_available=True).exclude(id=product.id)
+    related_products = Product.objects.filter(category=product.category).exclude(id=product.id)
 
     context = {
         'product': product,

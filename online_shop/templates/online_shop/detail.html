@@ -69,14 +69,14 @@
                                   <input type="number" class="form-control" name="quantity" placeholder="Quantity">
                                 </div>
 
-                               
-        
+
+
                                   <div class="form-group mb-3">
-                                   
+
                                     <input type="submit" class="btn btn-success" value="Send">
                                   </div>
                               </form>
-                           
+
                         </div>
                     </div>
                 </div>
@@ -103,12 +103,12 @@
                 </div>
 
                 <div class="col-8 offset-2 mt-5">
-                   
+
                     <div class=" p-5">
                         <div class="text-center">
                             <h3>Add Comment</h3>
                         </div>
-                    
+
                     <form method="post" action="{% url 'add_comment' product.id %}">
                         {% csrf_token %}
                         <div class="form-group mb-3">
@@ -126,13 +126,13 @@
                           </div>
 
                           <div class="form-group mb-3">
-                           
+
                             <input type="submit" class="btn btn-success" value="Send">
                           </div>
                       </form>
 
                     </div>
-                      
+
                 </div>
             </div>
         </div>

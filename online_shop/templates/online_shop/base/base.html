@@ -30,7 +30,7 @@
                 class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'product_list' %}">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
@@ -40,7 +40,7 @@
                         <li><hr class="dropdown-divider" /></li>
                         {% for category in categories %}
                             <li><a class="dropdown-item"
-                                   href="{% url 'category_detail_id' category.id %}">{{ category.title }}</a></li>
+                                   href="{% url 'category_detail_id' category.slug %}">{{ category.title }}</a></li>
                         {% endfor %}
 
                     </ul>
@@ -49,8 +49,8 @@
 
             </ul>
             <form class="d-flex">
-                <input type="text" class="form-contro" name="q">
-                <button class="btn btn-outline-dark" type="submit">
+                <input type="text" placeholder="type"  class="form-control" name="q">
+                <button class="btn btn-dark" type="submit">
                     <i class="bi-search-fill me-1"></i>
                     Search
 

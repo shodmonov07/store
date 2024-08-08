@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,6 +40,23 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'online_shop.apps.OnlineShopConfig',
 ]
+
+JAZZMIN_SETTINGS = {
+    "site_title": "Jamoliddin Shop Admin",
+    "site_header": "Online shop",
+    "site_brand": "Shodmonov",
+    "welcome_sign": "Welcome to Jamoliddin Shop Admin",
+    "show_sidebar": True,
+    "navigation_expanded": True,
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "your_app_name.Product": "fas fa-box",
+        "your_app_name.Category": "fas fa-tags",
+        "your_app_name.Order": "fas fa-shopping-cart",
+        "your_app_name.Comment": "fas fa-comments",
+    },
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
