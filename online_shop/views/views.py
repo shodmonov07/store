@@ -3,7 +3,6 @@ from typing import Optional
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
 from django.contrib import messages
 from online_shop.forms import CommentModelForm, OrderModelForm, ProductModelForm
 from online_shop.models import Product, Category, Comment

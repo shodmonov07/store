@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group, User
 from .models import Product, Category, Order, Comment
 
 
-admin.site.unregister(User)
+# admin.site.unregister(User)
 admin.site.unregister(Group)
 
 

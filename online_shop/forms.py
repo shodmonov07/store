@@ -27,3 +27,7 @@ class ProductModelForm(forms.ModelForm):
         model = Product
         fields = '__all__'
 
+
+class LoginForm(forms.Form):
+    username = forms.CharField(required=True)
+    password = forms.CharField(required=True)
